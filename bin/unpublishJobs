@@ -1,0 +1,19 @@
+#!/usr/bin/env node
+
+const { Pool, Client } = require('pg')
+console.log('url', process.env.DATABASE_URL);
+
+const client = new Client({
+  connectionString:process.env.DATABASE_URL
+})
+
+client.connect()
+
+
+client.query('SELECT * FROM test_table', (err, res) => {
+  console.log(err, res)
+  client.end()
+})
+
+
+
