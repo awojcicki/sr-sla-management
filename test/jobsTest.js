@@ -5,6 +5,7 @@ describe('jobs test', () => {
     describe('getjobs', () => {
         it('should get jobs', (done) => {
             done()
+            // process.env.DATABASE_URL = ''
             // var jobs = require('../services/jobs/jobs')
             //
             // jobs.getJobs({
@@ -12,7 +13,7 @@ describe('jobs test', () => {
             //
             // }, 0, null).then(result => {
             //     console.log('result', result)
-            //     done()
+            // done()
             // }).catch((e) => {
             //     console.log("ERROR", e)
             // })

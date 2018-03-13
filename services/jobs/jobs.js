@@ -18,7 +18,32 @@ module.exports = new function() {
                       "postingStatus": elem.postingStatus
                   }
               });
-              resolve(list)
+
+              let jobIds = list.map(elem => elem.id);
+              if (jobIds.length > 0) {
+                  pool.query("SELECT job_id, unposting_date from scheduled_unpostings where job_id = ANY ($1::varchar[])", [jobIds])
+                      .then(res => {
+
+                          var unpostingDates = {}
+                          for (var i in res.rows) {
+                              let row = res.rows[i];
+                              unpostingDates[row.job_id] = row.unposting_date;
+                          }
+                          for (var i in list) {
+                              var job = list[i]
+
+                              if (unpostingDates[job.id]) {
+                                  job.unpostingDate = unpostingDates[job.id];
+                              }
+                          }
+                          resolve(list)
+                  }).catch(e => { reject(e) })
+              } else {
+                  resolve(list)
+              }
+
+
+
           }).catch(e => { reject(e) })
        })
   }
