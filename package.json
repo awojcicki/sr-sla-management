@@ -7,8 +7,11 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "mocha"
+    "start": "npm run build:client && node index.js",
+    "build:client": "cd client-app && npm install && ./node_modules/.bin/webpack --env=dev",
+    "webpack:watch": "cd client-app && ./node_modules/.bin/webpack -w --env=dev",
+    "test": "mocha",
+    "postinstall": "npm run build:client"
   },
   "dependencies": {
     "body-parser": "1.18.2",
