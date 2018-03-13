@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "node test.js"
+    "test": "mocha"
   },
   "dependencies": {
     "bootstrap": "4.0.0",
@@ -17,6 +17,7 @@
     "pug": "2.0.1"
   },
   "devDependencies": {
+    "mocha": "^5.0.4",
     "request": "2.81.0",
     "tape": "4.7.0"
   },
