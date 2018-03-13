@@ -9,7 +9,6 @@ const pool = new Pool({
     connectionString: connectionString,
     ssl: true
 })
-
 module.exports = new function() {
   this.authenticate = function(apiKey) {
 
