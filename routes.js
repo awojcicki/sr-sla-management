@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 const request = require('request');
 const apiKeyAuth = require('./services/auth/apiKeyAuth')
+const apiKeyAuthHash = require('./services/auth/apiKeyHashAuth')
 
 router.get('/', (req, res) => res.render('pages/index'))
 
@@ -12,21 +13,27 @@ router.post('/login', (req, res) => {
             res.redirect(result.apiKeyHash + '/jobs');
         }
     }).catch(error=>{
-        console.log(error);
         res.status(404).send("Sorry can't find that!")
     })
 })
 
 // parameter middleware that will run before the next routes
-router.param('apiKeyHash', function(req, res, next, name) {
+router.param('apiKeyHash', function(req, res, next, apiKeyHash) {
     // check if the apiKeyHash exists
-    //apiKeyAuth.authenticate(req.apiKeyHash);
-    next();
-});
+    apiKeyAuthHash.authenticate(apiKeyHash)
+        .then(result => {
+            next();
+        }).catch(error =>{
+            res.redirect('/');
+        })
+})
 
 router.get('/:apiKeyHash/jobs', function(req, res) {
-    // the apiKeyHash was found and is available in req.apiKeyHash
-    res.render('pages/jobs')
+    if(req.params.apiKeyHash){
+        res.render('pages/jobs');
+    } else {
+        res.redirect('/');
+    }
 });
 
 module.exports = router
