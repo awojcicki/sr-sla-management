@@ -32,7 +32,7 @@
         }
 
         function _unPostJob(job){
-            return jobScheduleUnpostingResource.post({job: job}).$promise;
+            return jobScheduleUnpostingResource.post({jobId: job.id, unpostingDate: job.unpostingDate}).$promise;
         }
     }
 })();
