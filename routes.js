@@ -4,6 +4,7 @@ const router = express.Router()
 const request = require('request');
 const apiKeyAuth = require('./services/auth/apiKeyAuth')
 const apiKeyAuthHash = require('./services/auth/apiKeyHashAuth')
+const jobs = require('./services/jobs/jobs')
 
 router.get('/', (req, res) => res.render('pages/index'))
 
@@ -34,6 +35,25 @@ router.get('/:apiKeyHash/jobs', function(req, res) {
     } else {
         res.redirect('/');
     }
+});
+
+router.get('/:apiKeyHash/api/jobs', function(req, res) {
+    var apiKeyHash = req.params.apiKeyHash
+    if(apiKeyHash){
+        //TODO: you probably don't want to resolve this twice, it should be request scope, but I don't know express well ;)
+        apiKeyAuthHash.authenticate(apiKeyHash)
+            .then(result => {
+                jobs.getJobs(result, 0, null).then(jobs => {
+                    res.status(200).send(jobs)
+
+                })
+            }).catch(error =>{
+                res.redirect('/');
+            })
+    } else {
+        res.redirect('/');
+    }
+
 });
 
 module.exports = router
