@@ -15,6 +15,7 @@ module.exports = new function() {
 
         return new Promise((resolve, reject) => {
             request(options, (error, response, body) => {
+                console.log(response.statusCode, url)
                 if (response && response.statusCode == 200) {
                     resolve(body)
                 } else {
@@ -22,8 +23,29 @@ module.exports = new function() {
                 }
             })
         })
+    }
 
+    this.delete = (user, url) => {
+        var fullUrl = ENV + url;
 
+        var options = {
+            url: fullUrl,
+            method: "DELETE",
+            json: true,
+            headers: {
+                'X-SmartToken': user.apiKey
+            }
+        }
 
+        return new Promise((resolve, reject) => {
+            request(options, (error, response, body) => {
+                console.log(response.statusCode, url)
+                if (response && (response.statusCode == 200 || response.statusCode == 204)) {
+                    resolve(body)
+                } else {
+                    reject(body)
+                }
+            })
+        })
     }
 };
