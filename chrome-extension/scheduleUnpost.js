@@ -10,9 +10,8 @@ chrome.webRequest.onBeforeRequest.addListener((data) => {
 
 
 chrome.webRequest.onCompleted.addListener((data) => {
-    console.log('hohohoho', data);
-    publishing = true;
-},
+        publishing = true;
+    },
     {urls: ["https://*.smartrecruiters.com/backoffice/web/posting-wizard/jobs*"]})
 
 chrome.webRequest.onBeforeRequest.addListener((data) => {
@@ -37,5 +36,13 @@ chrome.tabs.onUpdated.addListener(
         }
     }
 );
+
+chrome.webRequest.onCompleted.addListener((data) => {
+        chrome.tabs.query({active: true}, function(tabs) {
+            chrome.tabs.sendMessage(tabs[0].id, {myJobsList: true, url: data.url}, function(response) {});
+        });
+    },
+    {urls: ["https://*.smartrecruiters.com/backoffice/web/data/jobs/my-jobs*"]})
+
 
 
