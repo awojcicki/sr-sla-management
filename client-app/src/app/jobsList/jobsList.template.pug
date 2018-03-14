@@ -11,7 +11,7 @@ ul.job-list--mine.list
             span.display--inline-block(ng-if="job.unpostingDate") unposting Date:
                 span.margin--left--s.font--bold {{job.unpostingDate | date}}
                 span.margin--horizontal--l |
-        div.text--right.display--inline-block
+        div.text--right.display--inline-block(style="float:right")
             input.element--input.display--inline-block(type='date', name='calendar', ng-model="job.unpostingDate")
 
             button.button.button--primary.margin--horizontal--s(ng-click="$ctrl.actions.unPost(job)") Unpost
