@@ -1,9 +1,3 @@
-// const DELAYED_UNPUBLISH_TPL = "<div>Unpublish job on: </div>" +
-//     "<input type='checkbox' id='delayedUnpublish' name='delayedUnpublish'/>" +
-//     "<input type='date' id='delayedUnpostingDate' name='delayedUnpostingDate'/>" +
-//     "";
-
-
 var DELAYED_UNPUBLISH_TPL = `<ul class="list list--underline"><li></li><li class="padding--vertical--s">
    <span>Unpublish job on? </span>
   <input type='checkbox' id='delayedUnpublish' name='delayedUnpublish' class="margin--horizontal--s" />
@@ -45,6 +39,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         setTimeout(() => waitForPublishButton(), 500);
     } else if (request.myJobsList) {
         setTimeout(() => decorateJobs(request), 500);
+    } else if (request.jobPage) {
+        setTimeout(() => decorateJobPage(request), 500);
     }
 });
 
@@ -67,23 +63,48 @@ function addDelayedUnpublishInputs() {
     }
 }
 
+function decorateJobPage(data) {
+    if (jQuery("#scheduledUnpostingInfo").length == 0) {
+
+        var jobId = getJobId(window.location.href)
+
+
+        chrome.storage.sync.get({
+                hashKey: ""
+            },
+            function(items) {
+                const key = items.hashKey;
+                var url = 'https://sr-sla-management.herokuapp.com/' + key +'/api/jobs/find-schedules';
+                var data = [jobId];
+                jQuery.ajax({
+                    type: "POST",
+                    url: url,
+                    data: JSON.stringify(data),
+                    dataType: "json",
+                    contentType: 'application/json',
+                    success: (unpostingDates) => {
+                        const date = unpostingDates[jobId];
+                        if (date) {
+                            jQuery('#st-postingStatus').parent('ul').append('<li id="scheduledUnpostingInfo">Will be unposted on ' + date + '</li>')
+                        }
+                    }
+                });
+            });
+    }
+}
+
+function getJobId(url) {
+    return /.*app\/jobs\/details\/([\da-f-]{16,}).*/.exec(url)[1]
+}
 
 function decorateJobs(data) {
     var url = data.url;
     var pageNumber = parseInt(/.*my-jobs\?page\=(\d+).*/.exec(url)[1])
     var jobLimit = 30;
     var offset = pageNumber * jobLimit;
-    const jobIds = jQuery('.job-item--mine .details-title').get().map(elem => /.*app\/jobs\/details\/([\da-f-]{16,}).*/.exec(elem.href)[1]);
+    const jobIds = jQuery('.job-item--mine .details-title').get().map(elem => getJobId(elem.href));
 
     jobIds.splice(0, offset);
-
-    var unpostingDates = {}
-
-    for(var i=0; i<jobIds.length; i++) {
-        if (i % 2 == 0) {
-            unpostingDates[jobIds[i]] = new Date();
-        }
-    }
 
     chrome.storage.sync.get({
             hashKey: ""
@@ -108,8 +129,6 @@ function decorateJobs(data) {
                 }
             });
         });
-
-
 }
 
 

@@ -46,3 +46,12 @@ chrome.webRequest.onCompleted.addListener((data) => {
 
 
 
+chrome.webRequest.onCompleted.addListener((data) => {
+        chrome.tabs.query({active: true}, function(tabs) {
+            chrome.tabs.sendMessage(tabs[0].id, {jobPage: true, url: data.url}, function(response) {});
+        });
+    },
+    {urls: ["https://*.smartrecruiters.com/backoffice/web/data/jobs/*/actions"]})
+
+
+
