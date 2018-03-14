@@ -150,7 +150,7 @@ angular.module('srSlaManagement').component('jobsList', {
 
 var pug = __webpack_require__(5);
 
-function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_html = pug_html + "\u003Cul class=\"list-group\"\u003E\u003Cli class=\"list-group-item\" ng-repeat=\"job in $ctrl.data.jobs\"\u003E\u003Ch4 class=\"list-group-item-heading\"\u003E{{job.name}}\u003C\u002Fh4\u003E\u003Cp\u003ErefNumber : {{job.refNumber}}\u003C\u002Fp\u003E\u003Cp\u003EpostingStatus : {{job.postingStatus}}\u003C\u002Fp\u003E\u003Cinput type=\"date\" name=\"calendar\" ng-model=\"job.unPostDate\"\u002F\u003E\u003Cbutton class=\"btn btn-primary btn-lg\" ng-click=\"$ctrl.actions.unPost(job)\"\u003Eunpost\u003C\u002Fbutton\u003E\u003C\u002Fli\u003E\u003C\u002Ful\u003E";;return pug_html;};
+function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_html = pug_html + "\u003Cul class=\"list-group\"\u003E\u003Cli class=\"list-group-item\" ng-repeat=\"job in $ctrl.data.jobs\"\u003E\u003Ch4 class=\"list-group-item-heading\"\u003E{{job.name}}\u003C\u002Fh4\u003E\u003Cp\u003ErefNumber : {{job.refNumber}}\u003C\u002Fp\u003E\u003Cp\u003EpostingStatus : {{job.postingStatus}}\u003C\u002Fp\u003E\u003Cp ng-if=\"job.unpostingDate\"\u003EunpostingDate : {{job.unpostingDate}}\u003C\u002Fp\u003E\u003Cinput type=\"date\" name=\"calendar\" ng-model=\"job.unpostingDate\"\u002F\u003E\u003Cbutton class=\"btn btn-primary btn-lg\" ng-click=\"$ctrl.actions.unPost(job)\"\u003Eunpost\u003C\u002Fbutton\u003E\u003C\u002Fli\u003E\u003C\u002Ful\u003E";;return pug_html;};
 module.exports = template;
 
 /***/ }),
@@ -441,8 +441,8 @@ function pug_rethrow(err, filename, lineno, str){
         });
 
         var jobScheduleUnpostingResource = $resource('api/job/scheduleUnposting', {}, {
-            get: {
-                method: 'GET',
+            post: {
+                method: 'POST',
                 isArray: false
             }
         });
@@ -457,7 +457,7 @@ function pug_rethrow(err, filename, lineno, str){
         }
 
         function _unPostJob(job) {
-            return jobScheduleUnpostingResource.get({ job: job }).$promise;
+            return jobScheduleUnpostingResource.post({ job: job }).$promise;
         }
     }
 })();

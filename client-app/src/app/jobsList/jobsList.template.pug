@@ -3,8 +3,9 @@ ul.list-group
         h4.list-group-item-heading {{job.name}}
         p refNumber : {{job.refNumber}}
         p postingStatus : {{job.postingStatus}}
+        p(ng-if="job.unpostingDate") unpostingDate : {{job.unpostingDate}}
 
 
-        input(type='date', name='calendar', ng-model="job.unPostDate")
+        input(type='date', name='calendar', ng-model="job.unpostingDate")
 
         button.btn.btn-primary.btn-lg(ng-click="$ctrl.actions.unPost(job)") unpost
