@@ -4,10 +4,10 @@
 //     "";
 
 
-var DELAYED_UNPUBLISH_TPL = `
-   <div>Unpublish job on? </div>
-  <input type='checkbox' id='delayedUnpublish' name='delayedUnpublish'/>
-  <input type='date' id='delayedUnpostingDate' name='delayedUnpostingDate'/>
+var DELAYED_UNPUBLISH_TPL = `<ul class="list list--underline"><li></li><li class="padding--vertical--s">
+   <span>Unpublish job on? </span>
+  <input type='checkbox' id='delayedUnpublish' name='delayedUnpublish' class="margin--horizontal--s" />
+  <input type='date' id='delayedUnpostingDate' name='delayedUnpostingDate' class='element--input display--inline-block margin--left--s'/></li></ul>
 `;
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
