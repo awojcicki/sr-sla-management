@@ -7,7 +7,12 @@
     "node": "8.10.x"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:css": "npm run sass:prod && npm run sass:dev",
+    "sass:dev": "node-sass src/styles.scss --output ./../../public/css/ --include-path src --importer node_modules/node-sass-import-once/index.js --output-style expanded --source-map true",
+    "sass:prod": "node-sass sass/styles.scss --output ./../../public/css/min/$npm_package_version/ --include-path src  --importer node_modules/node-sass-import-once/index.js --output-style compressed",
+    "postsass:dev": "postcss -u autoprefixer --autoprefixer.browsers 'last 2 version, &gt; 1%' -r ./dist/css/*.css",
+    "postsass:prod": "postcss -u autoprefixer --autoprefixer.browsers 'last 2 version, &gt; 1%' -r ./dist/css/min/$npm_package_version/*.css",
+    "preversion": "npm run build:css"
   },
   "dependencies": {
     "angular": "1.6.9",
@@ -25,8 +30,11 @@
     "checksum": "0.1.1",
     "connect-modrewrite": "0.10.1",
     "html-loader": "0.5.1",
-    "node-sass": "4.5.3",
+    "autoprefixer": "7.2.2",
+    "node-sass": "4.7.2",
     "node-sass-import-once": "1.2.0",
+    "postcss": "6.0.14",
+    "postcss-cli": "4.1.1",
     "pug": "2.0.0-rc.2",
     "pug-html-loader": "1.1.5",
     "pug-loader": "2.3.0",

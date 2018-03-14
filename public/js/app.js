@@ -99,15 +99,32 @@ jobsListController.$inject = ['jobListDataService'];
 function jobsListController(jobListDataService) {
     var ctrl = this;
 
-    ctrl.$onInit = function () {
-        console.log('INIT JOB LIST ');
+    ctrl.data = {
+        jobs: []
+    };
 
-        _getJobList(ctrl.user);
+    ctrl.actions = {
+        unPost: _unPostJob
+    };
+
+    ctrl.$onInit = function () {
+        _getJobList();
     };
 
     function _getJobList() {
-        jobListDataService.getJobsList().then(function (result) {}).catch(function (error) {
-            console.log('error');
+        jobListDataService.getJobsList().then(function (result) {
+            ctrl.data.jobs = result;
+        }).catch(function (error) {
+            console.log('error : ', error);
+        });
+    }
+
+    function _unPostJob(job) {
+        console.log('unPost : ', job);
+        jobListDataService.unPostJob(job).then(function (result) {
+            console.log('test : ', result);
+        }).catch(function (error) {
+            console.log('error : ', error);
         });
     }
 }
@@ -133,7 +150,7 @@ angular.module('srSlaManagement').component('jobsList', {
 
 var pug = __webpack_require__(5);
 
-function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_html = pug_html + "\u003Ch1\u003EJOB LIST\u003C\u002Fh1\u003E";;return pug_html;};
+function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_html = pug_html + "\u003Cul class=\"list-group\"\u003E\u003Cli class=\"list-group-item\" ng-repeat=\"job in $ctrl.data.jobs\"\u003E\u003Ch4 class=\"list-group-item-heading\"\u003E{{job.name}}\u003C\u002Fh4\u003E\u003Cp\u003ErefNumber : {{job.refNumber}}\u003C\u002Fp\u003E\u003Cp\u003EpostingStatus : {{job.postingStatus}}\u003C\u002Fp\u003E\u003Cinput type=\"date\" name=\"calendar\" ng-model=\"job.unPostDate\"\u002F\u003E\u003Cbutton class=\"btn btn-primary btn-lg\" ng-click=\"$ctrl.actions.unPost(job)\"\u003Eunpost\u003C\u002Fbutton\u003E\u003C\u002Fli\u003E\u003C\u002Ful\u003E";;return pug_html;};
 module.exports = template;
 
 /***/ }),
@@ -416,22 +433,31 @@ function pug_rethrow(err, filename, lineno, str){
 
     function jobListDataService($resource) {
 
-        var jobsListResource = $resource('/api/jobs', {}, {
+        var jobsListResource = $resource('api/jobs', {}, {
             fetch: {
+                method: 'GET',
+                isArray: true
+            }
+        });
+
+        var jobScheduleUnpostingResource = $resource('api/job/scheduleUnposting', {}, {
+            get: {
                 method: 'GET',
                 isArray: false
             }
         });
 
         return {
-            getJobsList: _getJobList
+            getJobsList: _getJobList,
+            unPostJob: _unPostJob
         };
 
         function _getJobList() {
-
-            console.log('GET JOSBS');
-
             return jobsListResource.fetch().$promise;
+        }
+
+        function _unPostJob(job) {
+            return jobScheduleUnpostingResource.get({ job: job }).$promise;
         }
     }
 })();
