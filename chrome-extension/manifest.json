@@ -14,6 +14,9 @@
     "storage",
     "webRequest", "webRequestBlocking", "webNavigation", "tabs", "http://*/*", "https://*/*", "debugger"
   ],
+  "icons": { "16": "bulb.png",
+    "48": "bulb.png",
+    "128": "bulb.png" },
 
   "content_scripts": [
     {
