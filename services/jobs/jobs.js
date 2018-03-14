@@ -99,36 +99,30 @@ module.exports = new function() {
           }
           try {
               srApi.get(user, '/jobs/' + jobId).then((job => {
-                  if (job.postingStatus != 'NOT_PUBLISHED') {
-                      pool.query('SELECT * FROM scheduled_unpostings WHERE job_id = $1', [jobId]).then(response => {
+                  pool.query('SELECT * FROM scheduled_unpostings WHERE job_id = $1', [jobId]).then(response => {
 
-                          var query = {}
-                          if (response.rowCount == 0) {
-                              query = {
-                                  text: 'INSERT INTO scheduled_unpostings(job_id, user_id, unposting_date) VALUES($1, $2, $3)',
-                                  values: [jobId, user.id, date]
-                              }
-                          } else {
-                              query = {
-                                  text: 'UPDATE scheduled_unpostings SET unposting_date = $3, user_id = $2 where job_id = $1',
-                                  values: [jobId, user.id, date]
-                              }
+                      var query = {}
+                      if (response.rowCount == 0) {
+                          query = {
+                              text: 'INSERT INTO scheduled_unpostings(job_id, user_id, unposting_date) VALUES($1, $2, $3)',
+                              values: [jobId, user.id, date]
                           }
-                          console.log('scheduling', query)
-                          pool.query(query).then((resp) => {
-                              resolve()
-                          }).catch(e => {
-                              reject(e)
-                          })
-
-
+                      } else {
+                          query = {
+                              text: 'UPDATE scheduled_unpostings SET unposting_date = $3, user_id = $2 where job_id = $1',
+                              values: [jobId, user.id, date]
+                          }
+                      }
+                      console.log('scheduling', query)
+                      pool.query(query).then((resp) => {
+                          resolve()
                       }).catch(e => {
                           reject(e)
                       })
 
-                  } else {
-                      reject("job istn't published")
-                  }
+                  }).catch(e => {
+                      reject(e)
+                  })
 
               })).catch(e => {
                   reject(e)
