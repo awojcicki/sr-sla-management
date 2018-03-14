@@ -18,7 +18,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         var unpostingDate = null
 
         if (delayedUnpostingDate.value) {
-            unpostingDate = new Date(delayedUnpostingDate.value + "T"+ new Date().getHours() + ":00:00")
+            unpostingDate = new Date(delayedUnpostingDate.value + "T"+ (("0" + new Date().getHours()).slice(-2)) + ":00:00")
         }
 
         chrome.storage.sync.get({
