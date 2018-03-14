@@ -85,7 +85,7 @@ function decorateJobPage(data) {
                     success: (unpostingDates) => {
                         const date = unpostingDates[jobId];
                         if (date) {
-                            jQuery('#st-postingStatus').parent('ul').append('<li id="scheduledUnpostingInfo">Will be unposted on ' + date + '</li>')
+                            jQuery('#st-postingStatus').parent('ul').append('<li class="desc-item" id="scheduledUnpostingInfo"> Will be unposted on ' + jQuery.date(date) + '</li>')
                         }
                     }
                 });
@@ -123,7 +123,7 @@ function decorateJobs(data) {
                     for (jobId in unpostingDates) {
                         var date = unpostingDates[jobId]
                         jQuery("#st-jobName[href*='" + jobId + "']").parent('.details').find('#st-postingStatus')
-                            .append("<span>Will be unposted on</span><span>" + date + "</span>")
+                            .append("<li class='meta-item'>Will be unposted on </li><span>" + jQuery.date(date) + "</span>")
                     }
 
                 }
@@ -131,6 +131,31 @@ function decorateJobs(data) {
         });
 }
 
+jQuery.date = function(dateObject) {
+    var d = new Date(dateObject);
+    var day = d.getDate();
+    var month = new Array();
+    var year = d.getFullYear();
+    if (day < 10) {
+        day = "0" + day;
+    }
+
+    month[0] = "Jan";
+    month[1] = "Feb";
+    month[2] = "Mar";
+    month[3] = "Apr";
+    month[4] = "May";
+    month[5] = "Jun";
+    month[6] = "Jul";
+    month[7] = "Aug";
+    month[8] = "Sep";
+    month[9] = "Oct";
+    month[10] = "Nov";
+    month[11] = "Dec";
+
+    var date = month[d.getMonth()] + " " + day + ", " + year;
+    return date;
+};
 
 
 
