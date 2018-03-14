@@ -3,7 +3,7 @@ ul.list-group
         h4.list-group-item-heading {{job.name}}
         p refNumber : {{job.refNumber}}
         p postingStatus : {{job.postingStatus}}
-        p(ng-if="job.unpostingDate") unpostingDate : {{job.unpostingDate}}
+        p(ng-if="job.unpostingDate") unpostingDate : {{job.unpostingDate | date}}
 
 
         input(type='date', name='calendar', ng-model="job.unpostingDate")
