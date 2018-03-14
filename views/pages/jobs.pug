@@ -2,18 +2,27 @@ doctype html
 html(lang="en", ng-app="srSlaManagement")
     head
         title= 'SmartRecruiters SLA Management App - My jobs'
-        link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous")
-        script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous")
+        link(rel="stylesheet", href="https://css-www.smartrecruiters.com/analytics/static/0.550.0/css/operational-analytics.min.css")
         script(type='text/javascript').
 
         script(src='/js/libs.js', type="text/javascript")
         script(src='/js/app.js', type="text/javascript")
-    body.text-center
-        nav.navbar.navbar-default.box-shadow
-            .container-fluid
-                .navbar-header
-                    img.mb-5(src="/logo-sr.png", title="Smartrecruiters")
-                    p SLA Management
+    body
+        .app
+            header.app-header
+                .wrapper
+                    .app-header-content
+                        a.app-header-logo.link--block
+                            i.sr-logo.sr-logo--main
+                            span.display--inline.margin--left--m.text--uppercase.font--bold SLA Management
 
-        .container
-            jobs-list(user="")
+            .app-container
+                div
+                    .wrapper
+                        .grid--gutter
+                            .toolbar.toolbar--secondary.toolbar--wide
+                                .grid--gutter.grid--middle
+                                    .column.wide-6of14.medium-1of2
+                                        p My jobs
+                            .box.box--wide
+                                jobs-list(user="")

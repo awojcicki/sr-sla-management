@@ -1,11 +1,17 @@
-ul.list-group
-    li.list-group-item(ng-repeat="job in $ctrl.data.jobs")
-        h4.list-group-item-heading {{job.name}}
-        p refNumber : {{job.refNumber}}
-        p postingStatus : {{job.postingStatus}}
-        p(ng-if="job.unpostingDate") unpostingDate : {{job.unpostingDate | date}}
+ul.job-list--mine.list
+    li.box.job-item.details-item(ng-repeat="job in $ctrl.data.jobs", ng-class="{'is-loading': job.isChange}")
+        p.details-title {{job.name}}
+        div.details-item.margin--vertical.display--inline-block
+            span.display--inline-block ref Number:
+                span.margin--left--s.font--bold {{job.refNumber}}
+                span.margin--horizontal--l |
+            span.display--inline-block posting Status:
+                span.font--bold.margin--left--s {{job.postingStatus}}
+                span.margin--horizontal--l |
+            span.display--inline-block(ng-if="job.unpostingDate") unposting Date:
+                span.margin--left--s.font--bold {{job.unpostingDate | date}}
+                span.margin--horizontal--l |
+        div.text--right.display--inline-block
+            input.element--input.display--inline-block(type='date', name='calendar', ng-model="job.unpostingDate")
 
-
-        input(type='date', name='calendar', ng-model="job.unpostingDate")
-
-        button.btn.btn-primary.btn-lg(ng-click="$ctrl.actions.unPost(job)") unpost
+            button.button.button--primary.margin--horizontal--s(ng-click="$ctrl.actions.unPost(job)") Unpost

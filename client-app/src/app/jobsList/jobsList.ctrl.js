@@ -29,12 +29,15 @@ angular
         }
         
         function _unPostJob(job){
-            console.log('unPost : ', job);
+            job.isChange = true;
+
             jobListDataService.unPostJob(job)
                 .then(function(result){
-                    console.log('test : ', result);
+
                 }).catch(function(error){
                     console.log('error : ', error);
+                }).finally(function(){
+                    job.isChange = false;
                 })
             
         }

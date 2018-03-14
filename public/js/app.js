@@ -120,11 +120,12 @@ function jobsListController(jobListDataService) {
     }
 
     function _unPostJob(job) {
-        console.log('unPost : ', job);
-        jobListDataService.unPostJob(job).then(function (result) {
-            console.log('test : ', result);
-        }).catch(function (error) {
+        job.isChange = true;
+
+        jobListDataService.unPostJob(job).then(function (result) {}).catch(function (error) {
             console.log('error : ', error);
+        }).finally(function () {
+            job.isChange = false;
         });
     }
 }
@@ -150,7 +151,7 @@ angular.module('srSlaManagement').component('jobsList', {
 
 var pug = __webpack_require__(5);
 
-function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_html = pug_html + "\u003Cul class=\"list-group\"\u003E\u003Cli class=\"list-group-item\" ng-repeat=\"job in $ctrl.data.jobs\"\u003E\u003Ch4 class=\"list-group-item-heading\"\u003E{{job.name}}\u003C\u002Fh4\u003E\u003Cp\u003ErefNumber : {{job.refNumber}}\u003C\u002Fp\u003E\u003Cp\u003EpostingStatus : {{job.postingStatus}}\u003C\u002Fp\u003E\u003Cp ng-if=\"job.unpostingDate\"\u003EunpostingDate : {{job.unpostingDate | date}}\u003C\u002Fp\u003E\u003Cinput type=\"date\" name=\"calendar\" ng-model=\"job.unpostingDate\"\u002F\u003E\u003Cbutton class=\"btn btn-primary btn-lg\" ng-click=\"$ctrl.actions.unPost(job)\"\u003Eunpost\u003C\u002Fbutton\u003E\u003C\u002Fli\u003E\u003C\u002Ful\u003E";;return pug_html;};
+function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_html = pug_html + "\u003Cul class=\"job-list--mine list\"\u003E\u003Cli class=\"box job-item details-item\" ng-repeat=\"job in $ctrl.data.jobs\" ng-class=\"{'is-loading': job.isChange}\"\u003E\u003Cp class=\"details-title\"\u003E{{job.name}}\u003C\u002Fp\u003E\u003Cdiv class=\"details-item margin--vertical display--inline-block\"\u003E\u003Cspan class=\"display--inline-block\"\u003Eref Number:\u003Cspan class=\"margin--left--s font--bold\"\u003E{{job.refNumber}}\u003C\u002Fspan\u003E\u003Cspan class=\"margin--horizontal--l\"\u003E|\u003C\u002Fspan\u003E\u003C\u002Fspan\u003E\u003Cspan class=\"display--inline-block\"\u003Eposting Status:\u003Cspan class=\"font--bold margin--left--s\"\u003E{{job.postingStatus}}\u003C\u002Fspan\u003E\u003Cspan class=\"margin--horizontal--l\"\u003E|\u003C\u002Fspan\u003E\u003C\u002Fspan\u003E\u003Cspan class=\"display--inline-block\" ng-if=\"job.unpostingDate\"\u003Eunposting Date:\u003Cspan class=\"margin--left--s font--bold\"\u003E{{job.unpostingDate | date}}\u003C\u002Fspan\u003E\u003Cspan class=\"margin--horizontal--l\"\u003E|\u003C\u002Fspan\u003E\u003C\u002Fspan\u003E\u003C\u002Fdiv\u003E\u003Cdiv class=\"text--right display--inline-block\"\u003E\u003Cinput class=\"element--input display--inline-block\" type=\"date\" name=\"calendar\" ng-model=\"job.unpostingDate\"\u002F\u003E\u003Cbutton class=\"button button--primary margin--horizontal--s\" ng-click=\"$ctrl.actions.unPost(job)\"\u003EUnpost\u003C\u002Fbutton\u003E\u003C\u002Fdiv\u003E\u003C\u002Fli\u003E\u003C\u002Ful\u003E";;return pug_html;};
 module.exports = template;
 
 /***/ }),
