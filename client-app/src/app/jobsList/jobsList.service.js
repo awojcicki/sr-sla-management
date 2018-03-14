@@ -15,7 +15,7 @@
         });
 
 
-        var jobScheduleUnpostingResource = $resource('api/job/scheduleUnposting', {}, {
+        var jobScheduleUnpostingResource = $resource('api/jobs/schedule', {}, {
             post: {
                 method: 'POST',
                 isArray: false

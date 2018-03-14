@@ -56,7 +56,7 @@ router.get('/:apiKeyHash/api/jobs', function(req, res) {
 
 });
 
-router.post('/:apiKeyHash/api/job/scheduleUnposting', function(req, res) {
+router.post('/:apiKeyHash/api/jobs/schedule', function(req, res) {
     var apiKeyHash = req.params.apiKeyHash
     var job = req.body.job
 
