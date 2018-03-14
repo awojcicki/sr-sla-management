@@ -48,7 +48,7 @@ router.get('/:apiKeyHash/api/jobs', function(req, res) {
 
                 })
             }).catch(error =>{
-                res.redirect('/');
+                res.status(500).send(error)
             })
     } else {
         res.redirect('/');
@@ -74,6 +74,7 @@ router.post('/:apiKeyHash/api/jobs/schedule', function(req, res) {
                     res.status(200).send(job)
                 }).catch(error =>{
                     console.log(error);
+                    res.status(500).send(error)
                 })
             }).catch(error =>{
                     res.redirect('/');
