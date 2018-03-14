@@ -41,17 +41,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 });
             });
 
-
-
-
     } else if (request.wizardPublishTab) {
         setTimeout(() => waitForPublishButton(), 500);
     }
-
 });
-
-
-
 
 function waitForPublishButton() {
     let publishButton = document.getElementsByTagName("publish-button");
@@ -64,9 +57,7 @@ function waitForPublishButton() {
 }
 
 function addDelayedUnpublishInputs() {
-
     if (jQuery('#delayedUnpublish').length == 0) {
-
         jQuery('publish-button')
             .parent('div.column')
             .parent('.column')

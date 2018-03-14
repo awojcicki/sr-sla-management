@@ -48,6 +48,23 @@ module.exports = new function() {
        })
   }
 
+  this.cancelUnposting = (user, jobId) => {
+      return new Promise((resolve, reject) => {
+          srApi.get(user, '/jobs/' + jobId).then((job => {
+              query = {
+                  text: 'DELETE FROM scheduled_unpostings WHERE job_id = $1',
+                  values: [jobId]
+              }
+
+              pool.query(query).then((resp) => {
+                  resolve()
+              }).catch(e => {reject(e)})
+
+          })).catch(e => { reject(e) })
+      });
+
+  }
+
   this.scheduleUnposting = (user, jobId, date) => {
 
       return new Promise((resolve, reject) => {
