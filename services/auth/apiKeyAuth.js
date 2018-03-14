@@ -41,7 +41,6 @@ module.exports = new function() {
                               pool.query('INSERT INTO users(user_id, api_key, api_key_hash, config) VALUES($1, $2, $3, $4)',
                                   [user.id, user.apiKey, user.apiKeyHash, user.config]
                                   , (err, res) => {
-                                      pool.end()
                                       if (err == null) {
                                           console.log('user created', user.id)
                                           resolve(user)
