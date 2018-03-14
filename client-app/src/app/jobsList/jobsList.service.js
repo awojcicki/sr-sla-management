@@ -16,8 +16,8 @@
 
 
         var jobScheduleUnpostingResource = $resource('api/job/scheduleUnposting', {}, {
-            get: {
-                method: 'GET',
+            post: {
+                method: 'POST',
                 isArray: false
             }
         });
@@ -32,7 +32,7 @@
         }
 
         function _unPostJob(job){
-            return jobScheduleUnpostingResource.get({job: job}).$promise;
+            return jobScheduleUnpostingResource.post({job: job}).$promise;
         }
     }
 })();

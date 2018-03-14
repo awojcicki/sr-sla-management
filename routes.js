@@ -56,15 +56,15 @@ router.get('/:apiKeyHash/api/jobs', function(req, res) {
 
 });
 
-router.get('/:apiKeyHash/api/job/scheduleUnposting', function(req, res) {
+router.post('/:apiKeyHash/api/job/scheduleUnposting', function(req, res) {
     var apiKeyHash = req.params.apiKeyHash
-    var job = req.query.job
-    
+    var job = req.body.job
+
     if(apiKeyHash){
         //TODO: you probably don't want to resolve this twice, it should be request scope, but I don't know express well ;)
         apiKeyAuthHash.authenticate(apiKeyHash)
             .then(result => {
-                jobs.scheduleUnposting(result, job.id, job.unPostDate).then(job => {
+                jobs.scheduleUnposting(result, job.id, job.unpostingDate).then(job => {
                     res.status(200).send(job)
                 }).catch(error =>{
                     console.log(error);
