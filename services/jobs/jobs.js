@@ -49,6 +49,7 @@ module.exports = new function() {
   }
 
   this.cancelUnposting = (user, jobId) => {
+      console.log("cancelling unposting for", user.id, jobId);
       return new Promise((resolve, reject) => {
           srApi.get(user, '/jobs/' + jobId).then((job => {
               query = {
@@ -68,8 +69,8 @@ module.exports = new function() {
   this.scheduleUnposting = (user, jobId, date) => {
 
       return new Promise((resolve, reject) => {
+          console.log("perofrming unposting for", user.id, jobId, date);
           srApi.get(user, '/jobs/' + jobId).then((job => {
-
               if (job.postingStatus != 'NOT_PUBLISHED') {
                   pool.query('SELECT * FROM scheduled_unpostings WHERE job_id = $1', [jobId]).then(response => {
 
