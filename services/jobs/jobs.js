@@ -75,6 +75,21 @@ module.exports = new function() {
 
   }
 
+  this.findSchedules = (user, jobIds) => {
+        return new Promise((resolve, reject) => {
+            console.log('searching for scheduled unposting for job', jobIds)
+            pool.query("SELECT job_id, unposting_date from scheduled_unpostings where job_id = ANY ($1::varchar[])", [jobIds])
+                .then(res => {
+                    var unpostingDates = {}
+                    for (var i in res.rows) {
+                        let row = res.rows[i];
+                        unpostingDates[row.job_id] = row.unposting_date;
+                    }
+                    resolve(unpostingDates)
+                })
+        })
+    }
+
   this.scheduleUnposting = (user, jobId, date) => {
 
       return new Promise((resolve, reject) => {

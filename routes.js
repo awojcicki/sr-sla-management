@@ -77,13 +77,37 @@ router.post('/:apiKeyHash/api/jobs/schedule', function(req, res) {
                     res.status(500).send(error)
                 })
             }).catch(error =>{
-                    res.redirect('/');
+                    res.status(500).send(error)
             })
     } else {
         res.redirect('/');
     }
 
 });
+
+router.post('/:apiKeyHash/api/jobs/find-schedules', function(req, res) {
+    var apiKeyHash = req.params.apiKeyHash
+    var jobIds = req.body
+
+    if(apiKeyHash){
+        //TODO: you probably don't want to resolve this twice, it should be request scope, but I don't know express well ;)
+        apiKeyAuthHash.authenticate(apiKeyHash)
+            .then(result => {
+                jobs.findSchedules(result, jobIds).then(schedules => {
+                    res.status(200).send(schedules)
+                }).catch(error =>{
+                    console.log(error);
+                    res.status(500).send(error)
+                })
+            }).catch(error =>{
+             res.status(500).send(error)
+        })
+    } else {
+        res.redirect('/');
+    }
+
+});
+
 
 
 module.exports = router

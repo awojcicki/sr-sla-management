@@ -45,4 +45,27 @@ describe('jobs test', () => {
 
         });
     });
+
+
+    describe('schedule', () => {
+        // it('find schedule', (done) => {
+        //
+        //
+        //     process.env.DATABASE_URL = 'fdsf'
+        //     var jobs = require('../services/jobs/jobs')
+        //
+        //
+        //     jobs.findSchedules({
+        //         apiKey: "api key",
+        //         id: 'user id'
+        //     }, ['', 'fdsfds']).then(result => {
+        //         console.log('result', result)
+        //         done()
+        //     }).catch((e) => {
+        //         console.log("ERROR", e)
+        //     })
+        //
+        //
+        // });
+    });
 });
