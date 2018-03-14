@@ -1,1 +1,10 @@
-h1 JOB LIST
+ul.list-group
+    li.list-group-item(ng-repeat="job in $ctrl.data.jobs")
+        h4.list-group-item-heading {{job.name}}
+        p refNumber : {{job.refNumber}}
+        p postingStatus : {{job.postingStatus}}
+
+
+        input(type='date', name='calendar', ng-model="job.unPostDate")
+
+        button.btn.btn-primary.btn-lg(ng-click="$ctrl.actions.unPost(job)") unpost

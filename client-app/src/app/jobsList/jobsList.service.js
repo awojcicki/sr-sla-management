@@ -7,22 +7,32 @@
 
     function jobListDataService($resource) {
 
-        var jobsListResource = $resource('/api/jobs', {}, {
+        var jobsListResource = $resource('api/jobs', {}, {
             fetch: {
+                method: 'GET',
+                isArray: true
+            }
+        });
+
+
+        var jobScheduleUnpostingResource = $resource('api/job/scheduleUnposting', {}, {
+            get: {
                 method: 'GET',
                 isArray: false
             }
         });
 
         return {
-            getJobsList: _getJobList
+            getJobsList: _getJobList,
+            unPostJob: _unPostJob
         };
 
         function _getJobList(){
-            
-            console.log('GET JOSBS');
-            
             return jobsListResource.fetch().$promise;
+        }
+
+        function _unPostJob(job){
+            return jobScheduleUnpostingResource.get({job: job}).$promise;
         }
     }
 })();
