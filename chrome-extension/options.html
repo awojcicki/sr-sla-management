@@ -1,13 +1,63 @@
 <!DOCTYPE html>
 <html>
-<head><title>My Test Extension Options</title></head>
+<head><title>SmartRecruiters SLA Management Options</title><style>
+html {
+    background: #f5f5f3;
+}
+.button {
+    background-color: #00ae41;
+    border: 1px solid #00ae41;
+    color: #fff;
+    display: inline-block;
+    padding: 8px 15px;
+    line-height: 1.2;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 3px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    transition: border-color .3s ease,background .3s ease,color .3s ease;
+    min-width: 100px;
+}
+.box {
+    max-width: 320px;
+    margin: 100px auto;
+    border: 1px solid #ddd;
+    padding: 40px;
+    border-radius: 3px;
+    background: #fff;
+}
+.label {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 10px;
+}
+.status {
+    color: #00ae41;
+    padding: 8px;
+    display: inline-block;
+    float: right;
+}
+.input--element {
+    max-width: 300px;
+    display: inline-block;
+    width: 100%;
+    padding: 7px;
+    margin-bottom: 14px;
+}
+</style></head>
 <body>
+<div class="box">
+    <label class="label">SmartRecruiters SLA Management KEY</label>
+    <input id="hashKey" class="input--element" placeholder="Insert key"/>
 
-SmartRecruiters SLA Management KEY:
-<input id="hashKey"/>
-
-<div id="status"></div>
-<button id="save">Save</button>
+    <div id="status" class="status"></div>
+    <button id="save" class="button">Save</button>
+</div>
 
 <script src="options.js"></script>
 </body>
