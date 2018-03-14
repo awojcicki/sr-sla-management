@@ -1,0 +1,30 @@
+{
+  "manifest_version": 2,
+  "name": "SmartRecruiters SLA Managment",
+  "version": "0.0.1",
+  "options_page": "options.html",
+  "description": "SmartRecruiters SLA Managment",
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "webRequest",
+    "webRequestBlocking",
+    "https://sr-sla-management.herokuapp.com/*",
+    "https://*.smartrecruiters.com/*",
+    "storage",
+    "webRequest", "webRequestBlocking", "webNavigation", "tabs", "http://*/*", "https://*/*", "debugger"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": ["https://*.smartrecruiters.com/*"],
+      "css": [],
+      "js": ["jquery-3.3.1.min.js", "addScheduledJobUnpostingButtons.js"]
+    }
+  ],
+  "background": {
+      "scripts": ["scheduleUnpost.js"]
+    }
+
+
+}
