@@ -1,3 +1,3 @@
-# Smartrecruiters SLA Management
+# SmartRecruiters SLA Management
 
     
