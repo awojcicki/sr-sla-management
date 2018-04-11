@@ -20,7 +20,7 @@ You are now ready to use schedule job unpublishing (new option on job posting wi
  ## SmartRecruiters SLA Management KEY
  In order to get `SmartRecruiters SLA Management KEY` and share it for other users in your company you have to perform following steps:
  - get SmartRecruiters Public API key
- - enter `https://sr-sla-management.herokuapp.com/` 
+ - enter [https://sr-sla-management.herokuapp.com/](https://sr-sla-management.herokuapp.com/)
  - provide api key
  - If api key if correct you will be redirected to job list. Copy address of this page. Characters between `https://sr-sla-management.herokuapp.com/` and `/jobs`
  is your  `SmartRecruiters SLA Management KEY` that you can share with other employees of your company. 
