@@ -94,7 +94,12 @@ function decorateJobPage(data) {
 }
 
 function getJobId(url) {
-    return /.*app\/jobs\/details\/([\da-f-]{16,}).*/.exec(url)[1]
+    var match = /.*app\/jobs\/details\/([\da-f-]{16,}).*/.exec(url)
+    if (match != null) {
+        return match[1];
+    } else {
+        return null;
+    }
 }
 
 function decorateJobs(data) {
